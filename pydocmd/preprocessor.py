@@ -83,3 +83,20 @@ class Preprocessor(object):
         result += '.'
       return (match.group('prefix') or '') + result
     return re.sub('(?P<prefix>^| |\t)#(?P<ref>[\w\d\._]+)(?P<parens>\(\))?', handler, content)
+
+# --------------------------
+# Custom
+  
+# Custom DataLoader Yaml preprocessor
+class DataLoaderYamlPreprocessor(Preprocessor):
+
+  def preprocess_section(self, section):
+    """
+    Preprocess the contents of *section*.
+    """
+    if "output_schema:" in section.content and "args:" in section.content and "doc:" in section.content:
+      section.content = section.content.replace("info:", "\n{text}```yaml\ninfo:".format(text=text)) + "\n```"
+    else:
+      # run the normal pre-processor
+      super(YamlPreprocessor, self).preprocess_section(section)
+  
