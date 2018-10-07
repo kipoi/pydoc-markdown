@@ -95,8 +95,9 @@ class DataLoaderYamlPreprocessor(Preprocessor):
     Preprocess the contents of *section*.
     """
     if "output_schema:" in section.content and "args:" in section.content and "doc:" in section.content:
+      text = "***YAML description***\n\n"
       section.content = section.content.replace("info:", "\n{text}```yaml\ninfo:".format(text=text)) + "\n```"
     else:
       # run the normal pre-processor
-      super(YamlPreprocessor, self).preprocess_section(section)
+      super(DataLoaderYamlPreprocessor, self).preprocess_section(section)
   
