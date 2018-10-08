@@ -107,7 +107,7 @@ def ul_dict_nested(d, format_fn=lambda x: x, level=0):
         return "\n" + ul_dict_nested(v, format_fn, level + 1)
 
     if isinstance(d, OrderedDict):
-        return ul(["***{k}***: {v}".format(k=k, v=optional_format(v)) for k, v in d.items()], level)
+        return ul(["**{k}**: {v}".format(k=k, v=optional_format(v)) for k, v in d.items()], level)
     elif isinstance(d, list):
         return ul([optional_format(v) for v in d], level)
     else:
@@ -146,7 +146,7 @@ def format_kipoi_dataloader(content):
     out = code + "\n"
     out += descr.info.doc + "\n"
     out += "\n".join([
-        section("Arguments", ul_dict(descr.args, format_arg)),
+        section("Arguments", ul_dict(descr.args, format_arg)) + "\n",
         section("Output schema", ul_dict_nested(OrderedDict([
             ("inputs", descr.output_schema.inputs),
             ("targets", descr.output_schema.targets),
